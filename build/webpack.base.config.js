@@ -1,8 +1,7 @@
 const webpack = require('webpack')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
@@ -66,10 +65,18 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
+    // new webpack.optimize.UglifyJsPlugin({
+    //   sourceMap: true,
+    //   compress: {
+    //     warnings: false
+    //   }
+    // }),
+    new UglifyJsPlugin({
+      "uglifyOptions": {
+        compress: {
+          warnings: false
+        },
+        sourceMap: true
       }
     }),
     new webpack.LoaderOptionsPlugin({
